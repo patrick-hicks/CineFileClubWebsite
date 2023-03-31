@@ -1,5 +1,8 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from .models import *
+from .forms import MovieForm
+
 # Create your views here.
 
 def index(request):
@@ -22,3 +25,17 @@ def user_ratings(request, username):
           'error_msg': f'The requested user "{username}" does not exist in the system.'
       }
       return render(request, 'error.html', context)
+
+def add_movie(request):
+    submitted = False
+    if request.method == 'POST':
+        form = MovieForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/add_movie?submitted=True')
+    else:
+        form = MovieForm
+        if 'submitted' in request.GET:
+            submitted = True
+    return render(request, 'add_movie.html', {'form': form, 'submitted': submitted})
+
