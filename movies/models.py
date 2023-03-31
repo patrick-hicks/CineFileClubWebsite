@@ -52,3 +52,8 @@ class User(AbstractUser):
     # username = None
     # email = models.EmailField('email address',unique = True, validators=[EmailValidator])
     # objects = UserManager()
+
+class Movie(models.Model):
+    title = models.CharField(null=False, max_length=255)
+    description = models.TextField(blank=True)
+    release_date = models.DateField(null=True)
