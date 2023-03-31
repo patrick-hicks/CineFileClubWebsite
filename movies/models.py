@@ -52,3 +52,9 @@ class User(AbstractUser):
     # username = None
     # email = models.EmailField('email address',unique = True, validators=[EmailValidator])
     # objects = UserManager()
+
+class Movie(models.Model):
+    pass
+
+class Rating(models.Model):
+    pass
