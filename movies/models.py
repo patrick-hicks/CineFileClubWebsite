@@ -54,7 +54,6 @@ class User(AbstractUser):
     # objects = UserManager()
 
 class Movie(models.Model):
-    pass
-
-class Rating(models.Model):
-    pass
+    title = models.CharField(null=False, max_length=255)
+    description = models.TextField(blank=True)
+    release_date = models.DateField(null=True)
