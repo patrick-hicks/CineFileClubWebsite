@@ -56,7 +56,7 @@ class User(AbstractUser):
 class Movie(models.Model):
     title = models.CharField(null=False, max_length=255)
     description = models.TextField(blank=True)
-    release_date = models.DateField(null=True)
+    release_date = models.DateField(null=True, blank=True)
     def __str__(self):
         name = self.title
         return name
@@ -70,3 +70,6 @@ class Rating(models.Model):
     user = models.ForeignKey(User,
                              related_name = "ratings",
                              on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Rating#{self.id}"
