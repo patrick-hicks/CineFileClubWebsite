@@ -57,13 +57,14 @@ class Movie(models.Model):
     title = models.CharField(null=False, max_length=255)
     description = models.TextField(blank=True)
     release_date = models.DateField(null=True, blank=True)
+    
     def __str__(self):
         name = self.title
         return name
 
 class Rating(models.Model):
     score = models.DecimalField(max_digits=3, decimal_places=1, validators = [MaxValueValidator(10), MinValueValidator(1)])
-    description = models.TextField(max_length = 4000, null = True, blank = False)
+    description = models.TextField(max_length = 4000, null = True, blank = True)
     movie = models.ForeignKey(Movie,
                               related_name = "ratings",
                               on_delete = models.CASCADE)

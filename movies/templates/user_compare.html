@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}CineFile Club{% endblock %}
+{% block content %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script>
+
+<canvas id="distribution_chart" style="width:100%;max-width:500px"></canvas>
+
+<table class="table table-hover" , id="ratings_table">
+  <thead>
+    <tr>
+      <th scope="col">Movie</th>
+      <th scope="col">{{ user1.username }}'s Score</th>
+      <th scope="col">{{ user2.username }}'s Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for movie in movies %}
+    <tr>
+      <td>{{movie.title}}</td>
+      <td>{{movie.user1_score}}</td>
+      <td>{{movie.user2_score}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<script>
+  //gets table
+  var oTable = document.getElementById('ratings_table');
+
+  //gets rows of table
+  var rowLength = oTable.rows.length;
+  var data = [];
+
+  //loops through rows    
+  for (i = 1; i < rowLength; i++) {
+
+    var oCells = oTable.rows.item(i).cells;
+
+    data.push({
+      // movie: oCells[0].innerHTML,
+      x: Number(oCells[1].innerHTML),
+      y: Number(oCells[2].innerHTML),
+    });
+  }
+
+  var chartId = new Chart('distribution_chart', {
+    type: 'scatter',
+    data: {
+      datasets: [{
+        // label: "",
+        data: data,
+        backgroundColor: "#198754",
+        borderColor: ['black'],
+        radius: 8,
+      }],
+    },
+    options: {
+      responsive: false,
+      scales: {
+        x: {
+          type: 'linear',
+          position: 'bottom,',
+          max: 10,
+          min: 0,
+        },
+        y: {
+          type: 'linear',
+          max: 10,
+          min: 0,
+        },
+        // movie: {}
+      }
+    },
+  });
+
+</script>
+
+{% endblock %}
