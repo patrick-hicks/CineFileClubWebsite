@@ -4,11 +4,16 @@
 {% block title %}CineFile Club{% endblock %}
 {% block content %}
 
-<table class="table">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+<canvas id="distribution_chart" style="width:100%;max-width:500px"></canvas>
+
+<table class="table table-hover" , id="ratings_table">
   <thead>
     <tr>
       <th scope="col">Movie</th>
       <th scope="col">Score</th>
+      <th scope="col">Description</th>
     </tr>
   </thead>
   <tbody>
@@ -16,12 +21,56 @@
     <tr>
       <td>{{rating.movie.title}}</td>
       <td>{{rating.score}}</td>
+      <td>{{rating.description}}</td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
 
+<script>
+  //gets table
+  var oTable = document.getElementById('ratings_table');
 
+  //gets rows of table
+  var rowLength = oTable.rows.length;
 
+  var array = [];
+
+  //loops through rows    
+  for (i = 1; i < rowLength; i++) {
+
+    //gets cells of current row
+    var oCells = oTable.rows.item(i).cells;
+
+    //gets amount of cells of current row
+    var cellLength = oCells.length;
+
+    array.push(Number(oCells[1].innerHTML));
+
+  }
+
+  console.log(array);
+  var xValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  var yValues = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  // var barColors = ["red", "green", "blue", "orange", "brown"];
+  // 
+  for (i = 0; i < array.length; i++) {
+    yValues[Math.floor(array[i])] += 1;
+  }
+
+  new Chart("distribution_chart", {
+    type: "bar",
+    data: {
+
+      labels: xValues,
+      datasets: [{
+        backgroundColor: "#198754",
+        data: yValues
+      }]
+    },
+    // options: { ...}
+  });
+
+</script>
 
 {% endblock %}
